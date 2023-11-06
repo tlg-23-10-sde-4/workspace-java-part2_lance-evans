@@ -11,11 +11,33 @@ package com.javatunes.product;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+/*
+ * At runtime, this will really be
+ * ShoppingCart<MusicItem>
+ * ShoppingCart<MediaPlayer>
+ * ShoppingCart<Product> - this one holds both kinds of products
+ */
 
-public class ShoppingCart<T> {
-  // storage for the cart's contents
+public class ShoppingCart<T extends Product> {
+  // storage for the cart's contents, this is a classic HAS-A
   private Collection<T> items = new ArrayList<T>();  // diamond not used here just to emphasize the T
-  
+
+  public double total() {
+    double result = 0.0;
+
+    for (T item : items){
+      result += item.getPrice();
+    }
+    return result;
+  }
+  public Collection<T> allItems(){
+    return Collections.unmodifiableCollection(items);
+  }
+
+  public int size(){
+    return items.size();
+  }
+
   public void addItem(T item) {
     items.add(item);
   }
