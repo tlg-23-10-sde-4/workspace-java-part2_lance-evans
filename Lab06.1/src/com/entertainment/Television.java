@@ -8,10 +8,10 @@
  */
 package com.entertainment;
 
+import java.util.Comparator;
 import java.util.Objects;
 
-public class Television
-implements Comparable<Television> {
+public class Television implements Comparable<Television> {
   public static final int MIN_VOLUME = 0;
   public static final int MAX_VOLUME = 100;
   public static final int MIN_CHANNEL = 1;
@@ -20,6 +20,7 @@ implements Comparable<Television> {
   private String brand;
   private int volume;
   private DisplayType display;
+  // Television HAS-A Tuner
   private Tuner tuner = new Tuner();  // set up internally and used for channel management
   
   public Television() {
@@ -118,5 +119,46 @@ implements Comparable<Television> {
                Objects.equals(this.getDisplay(), other.getDisplay());
     }
     return result;
+  }
+
+  //NAMED MEMBER-LEVEL INNER CLASSES
+  private class Tuner {
+    private int channel = 3;  // default channel for cable and satellite customers
+
+    public int getChannel() {
+      return this.channel;
+    }
+    public void setChannel(int channel) {
+      this.channel = channel;
+    }
+  }
+
+  // STATIC NESTED CLASSES
+  // outside here this is referred to as Television.DisplayType
+  public static enum DisplayType {
+    LCD, LED, OLED, PLASMA, CRT
+  }
+
+  // outside here this is referred to as Television.ChannelComparator
+  public static class ChannelComparator implements Comparator<Television> {
+
+    @Override
+    public int compare(Television tv1, Television tv2) {
+      return Integer.compare(tv1.getCurrentChannel(), tv2.getCurrentChannel());
+    }
+  }
+
+  // outside here this is referred to as Television.BrandChannelComparator
+  public static class BrandChannelComparator implements Comparator<Television> {
+
+    @Override
+    public int compare(Television tv1, Television tv2) {
+      int result = tv1.getBrand().compareTo(tv2.getBrand());
+
+      if (result == 0) {
+        result = Integer.compare(tv1.getCurrentChannel(), tv2.getCurrentChannel());
+      }
+      return result;
+    }
   }
 }
