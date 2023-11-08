@@ -11,16 +11,20 @@ package com.entertainment;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.MethodRule;
 import org.junit.rules.TestName;
 import org.junit.runners.MethodSorters;
+import org.junit.runners.model.Statement;
 
 /**
  * TODO: use an annotation(s) in this class to apply some control over the order of test execution.
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MethodOrderTest {
 
     @Test
     public void shouldIOrderTheExceutionOfMyTests() {
+
         System.out.println("shouldIOrderTheExceutionOfMyTests");
     }
 
