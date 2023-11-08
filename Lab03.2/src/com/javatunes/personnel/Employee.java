@@ -30,7 +30,7 @@ implements TaxPayer, NamedEntity {
    * All employees get paid, but they implement this differently.
    * Method in base class but NO implementation.
    */
-  public abstract void pay();
+  public abstract double pay();
   
   /**
    * All employees work, and they all implement this the same way.
@@ -44,6 +44,7 @@ implements TaxPayer, NamedEntity {
   public String getName() {
     return this.name;
   }
+
   public void setName(String name) {
     this.name = name;
   }
@@ -51,6 +52,7 @@ implements TaxPayer, NamedEntity {
   public Date getHireDate() {
     return this.hireDate;
   }
+
   public void setHireDate(Date hireDate) {
     this.hireDate = hireDate;
   }

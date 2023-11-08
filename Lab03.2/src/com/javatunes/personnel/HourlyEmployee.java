@@ -30,8 +30,10 @@ extends Employee {
   }
   
   @Override
-  public void pay() {
-    System.out.println(getName() + " is paid hourly " + (getRate() * getHours()));
+  public double pay() {
+    double payment = getRate() * getHours();
+    System.out.println(getName() + " is paid hourly " + payment);
+    return payment;
   }
   
   @Override  // interface TaxPayer
@@ -44,6 +46,7 @@ extends Employee {
   public Double getRate() {
     return this.rate;
   }
+
   public void setRate(Double rate) {
     this.rate = rate;
   }
@@ -51,6 +54,7 @@ extends Employee {
   public Double getHours() {
     return this.hours;
   }
+
   public void setHours(Double hours) {
     this.hours = hours;
   }
