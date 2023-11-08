@@ -1,10 +1,16 @@
 package com.javatunes.billing;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TaxCalculatorFactory {
+
+    private  static final Map<Location, TaxCalculator> calcMap = new HashMap<>();
 
     private TaxCalculatorFactory(){}
 
     public static TaxCalculator getTaxCalculator(Location location){
+
 
         /*
         * Consider implementing a cache of TaxCalculator objects
@@ -18,18 +24,20 @@ public class TaxCalculatorFactory {
         * Hint: you could use a simple Map<Location,TaxCalculator> for the cache
         * It would be a 3-row map, each row has Location | TaxCalculator
         */
-        TaxCalculator calc = null;
-        switch (location){
-            case USA:
-                calc = new USATax();
-                break;
-            case EUROPE:
-                calc = new EuropeTax();
-                break;
-            case ONLINE:
-                calc = new OnlineTax();
-                break;
+        if (!calcMap.containsKey(location)){
+            switch (location){
+                case USA:
+                    calcMap.put(location, new USATax());
+                    break;
+                case EUROPE:
+                    calcMap.put(location, new EuropeTax());
+                    break;
+                case ONLINE:
+                    calcMap.put(location, new OnlineTax());
+                    break;
         }
-        return calc;
+
+        }
+        return calcMap.get(location);
     }
 }
