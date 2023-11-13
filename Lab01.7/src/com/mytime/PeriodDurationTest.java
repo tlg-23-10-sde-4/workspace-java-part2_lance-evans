@@ -8,8 +8,7 @@
  */
 package com.mytime;
 
-import java.time.Duration;
-import java.time.Instant;
+import java.time.*;
 
 public class PeriodDurationTest {
   /**
@@ -17,11 +16,11 @@ public class PeriodDurationTest {
    * To run one test method at a time, uncomment the call to the one you want to execute.
    */
   public static void main(String[] args) {
-    // testAgeDifference();
-    // testNextBirthday();
-    // testNextHalleysComet();
-    // testPerformance();
-    // testSpecialEvent();
+    //testAgeDifference();
+    //testNextBirthday();
+    //testNextHalleysComet();
+    //testPerformance();
+    //testSpecialEvent();
   }
 
   /**
@@ -33,6 +32,10 @@ public class PeriodDurationTest {
    */
   public static void testAgeDifference() {
     // TODO
+    LocalDate momBday = LocalDate.of(1973, 11,11);
+    LocalDate dadBday = LocalDate.of(1971,5,31);
+    int difference = momBday.compareTo(dadBday);
+    System.out.println(difference);
   }
 
   /**
@@ -43,6 +46,11 @@ public class PeriodDurationTest {
    * RESULT: 
    */
   public static void testNextBirthday() {
+    LocalDate today = LocalDate.now();
+    LocalDate bday = LocalDate.of(2024,5,30);
+
+    Period daysTillBday = today.until(bday);
+    System.out.println(daysTillBday);
     // TODO
   }
   
@@ -55,6 +63,10 @@ public class PeriodDurationTest {
    * RESULT:
    */
   public static void testNextHalleysComet() {
+    Year halleysCometLastSeen = Year.of(1986);
+    int yearsTillHalleysComet = 75;
+    Year nextHalleysComet = halleysCometLastSeen.plusYears(yearsTillHalleysComet);
+    System.out.println(nextHalleysComet);
     // TODO
   }
   

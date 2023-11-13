@@ -20,10 +20,20 @@ public class Client {
     // create Department
     Department dept = new Department("Sales", "Seattle");
     System.out.println(dept);
-    
-    // add Employees to it
-    dept.addEmployee(new Employee("Jacob", Date.valueOf("1988-06-01")));
-    dept.addEmployee(new Employee("Amy",   Date.valueOf("2002-02-20")));
+
+/*    // add Employees to it
+    dept.addEmployee(new Employee("Jacob", Date.valueOf("1988-06-01")) {
+      @Override
+      public void pay() {
+
+      }
+    });
+    dept.addEmployee(new Employee("Amy", Date.valueOf("2002-02-20")) {
+      @Override
+      public void pay() {
+
+      }
+    });*/
     
     // add HourlyEmployees and SalariedEmployees to it
     dept.addEmployee(new HourlyEmployee("Lonnie",   Date.valueOf("2015-03-31"), 35.0, 40.0));
@@ -41,6 +51,6 @@ public class Client {
     
     // TODO: uncomment this after you've implemented payEmployees() in Department
     // System.out.println("\nPay employees:");
-    // dept.payEmployees();
+    dept.payEmployees();
   }
 }

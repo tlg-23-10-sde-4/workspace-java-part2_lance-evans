@@ -8,10 +8,13 @@
  */
 package com.javatunes.personnel;
 
+import gov.irs.TaxPayer;
+
 import java.sql.Date;
 
 public class HourlyEmployee
-extends Employee {
+extends Employee
+{
   private Double rate;
   private Double hours;
   
@@ -24,10 +27,13 @@ extends Employee {
   }
   
   public HourlyEmployee(String name, Date hireDate, Double rate, Double hours) {
-    setName(name);
-    setHireDate(hireDate);
+    this(name,hireDate);
     setRate(rate);
     setHours(hours);
+  }
+
+  public void pay(){
+    System.out.printf("%s is paid hourly %s", getName(), getHours()*getRate());
   }
   
   public Double getRate() {
@@ -48,5 +54,12 @@ extends Employee {
   public String toString() {
     return getClass().getSimpleName() + ": name=" + getName() + ", hireDate=" + getHireDate() + 
       ", rate=" + getRate() + ", hours=" + getHours();
-  }  
+  }
+
+  @Override
+  public double payTaxes() {
+    double taxes = getHours() * getRate() * HOURLY_TAX_RATE;
+    System.out.println(getName() + " paid taxes of " + taxes);
+    return taxes;
+  }
 }

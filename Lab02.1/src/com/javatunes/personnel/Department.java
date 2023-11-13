@@ -41,7 +41,9 @@ public class Department {
    * it will look similar to the workEmployees() method above
    */
   public void payEmployees() {
-    // TODO
+    for (Employee emp : employees){
+      emp.pay();
+    }
   }
   
   // helper method to add an Employee to the collection

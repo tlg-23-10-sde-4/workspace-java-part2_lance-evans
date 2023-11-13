@@ -8,18 +8,21 @@
  */
 package com.mytime;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+
 public class DerivedDateTimeTest {
   /**
    * main() calls each of the test methods in turn (currently commented out).
    * To run one test method at a time, uncomment the call to the one you want to execute.
    */
   public static void main(String[] args) {
-    // testPresidentsFirst100Days();
-    // testPopularBirthdays();
-    // testEarlyRetirement();
-    // testLaborDay();
-    // testElectionDay();
-    // testAnniversary();
+    //testPresidentsFirst100Days();
+    //testPopularBirthdays();
+    //testEarlyRetirement();
+    //testLaborDay();
+    //testElectionDay();
+    testAnniversary();
   }
   
   /**
@@ -29,7 +32,9 @@ public class DerivedDateTimeTest {
    * RESULT: 
    */
   public static void testPresidentsFirst100Days() {
-    // TODO
+    LocalDate presPerformance = LocalDate.of(2017,1,20).plusDays(100);
+    System.out.println(presPerformance);
+
   }
 
   /**
@@ -40,9 +45,13 @@ public class DerivedDateTimeTest {
    * RESULT: 
    */
   public static void testPopularBirthdays() {
-    // TODO: what is the average birthday of someone conceived on Valentine's Day?
+    // what is the average birthday of someone conceived on Valentine's Day?
+    LocalDate vdayBaby = LocalDate.of(2023, 2, 14).plusWeeks(38);
+    System.out.println(vdayBaby);
     
-    // TODO: what is the average birthday of someone conceived on New Year's Eve (after midnight)?
+    // what is the average birthday of someone conceived on New Year's Eve (after midnight)?
+    LocalDate newYearsBaby = LocalDate.of(2023,1,1).plusWeeks(38);
+    System.out.println(newYearsBaby);
   }
   
   /**
@@ -53,7 +62,8 @@ public class DerivedDateTimeTest {
    * RESULT: 
    */
   public static void testEarlyRetirement() {
-    // TODO
+    LocalDate result = LocalDate.of(1992,5,30).plusYears(59).plusMonths(6);
+    System.out.println(result);
   }
   
   /**
@@ -64,7 +74,11 @@ public class DerivedDateTimeTest {
    * RESULT: 
    */
   public static void testLaborDay() {
-    // TODO
+    LocalDate laborDay = LocalDate.of(1992, 9 , 1);
+    while (laborDay.getDayOfWeek() != DayOfWeek.MONDAY) {
+      laborDay = laborDay.plusDays(1);
+    }
+    System.out.println(laborDay);
   }
   
   /**
@@ -74,6 +88,11 @@ public class DerivedDateTimeTest {
    * RESULT: 
    */
   public static void testElectionDay() {
+    LocalDate electionDay = LocalDate.of(2024,11,1);
+    while (electionDay.getDayOfWeek() != DayOfWeek.TUESDAY){
+      electionDay = electionDay.plusDays(1);
+    }
+    System.out.println(electionDay);
     // TODO
   }
   
