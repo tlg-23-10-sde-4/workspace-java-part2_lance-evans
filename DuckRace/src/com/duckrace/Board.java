@@ -1,7 +1,6 @@
 package com.duckrace;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -9,11 +8,11 @@ import java.util.*;
 /*
  * This is a lookup table of ids to student names.
  * When a duck wins for the first time, we need to find out who that is.
- * This lookup table could be hardcoded with the data, or we could read the data 
+ * This lookup table could be hardcoded with the data, or we could read the data
  * in from a file, so that no code changes would need to be made for each cohort.
  *
  * Map<Integer,String> studentIdMap;
- * 
+ *
  * Integer    String
  * =======    ======
  *    1       John
@@ -22,7 +21,7 @@ import java.util.*;
  *    4       Armando
  *    5       Sheila
  *    6       Tess
- * 
+ *
  *
  * We also need a data structure to hold the results of all winners.
  * This data structure should facilitate easy lookup, retrieval, and storage.
@@ -39,9 +38,39 @@ import java.util.*;
  *   17       17    Dom        1    DEBIT_CARD
  */
 
-public class Board {
+public class Board implements Serializable {
+    private static final String dataPath = "data/board.dat";
+    private static final String studentIdPath = "conf/student-ids.csv";
+
+    /*
+     * If data/board.dat exists, read that file into a Board object and return it.
+     * We  will use Java's built-in object serialization feature.
+     * Otherwise, return a new Board().
+     */
+    public static Board getInstance() {
+        Board board = null;
+
+        if (Files.exists(Path.of(dataPath))) {
+            try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(dataPath))) {
+                board = (Board) in.readObject();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            board = new Board();
+        }
+        return board;
+    }
+
     private final Map<Integer,String> studentIdMap = loadStudentIdMap();
     private final Map<Integer,DuckRacer> racerMap  = new TreeMap<>();
+
+    // prevent instantiation from outside, it is only done in here (in getInstance() method)
+    private Board(){
+
+    }
 
     public int maxId(){
         return studentIdMap.size();
@@ -56,14 +85,28 @@ public class Board {
      * either way it needs to win
      */
     public void updateBoard(int id, Reward reward){ //id present, so fetch DuckRacer next to it
+        DuckRacer racer = null;
         if (racerMap.containsKey(id)) {
-            DuckRacer racer = racerMap.get(id);
-            racer.win(reward);
+            racer = racerMap.get(id);
         }
         else {
-            DuckRacer racer = new DuckRacer(id, studentIdMap.get(id));
+            racer = new DuckRacer(id, studentIdMap.get(id));
             racerMap.put(id, racer);
-            racer.win(reward);
+        }
+        racer.win(reward);
+        save();
+    }
+
+    /*
+     * Writes *this* Board object to binary file data/board.dat
+     * USes built-in Java object serialization facility.
+     * */
+    private void save() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(dataPath))){
+            out.writeObject(this);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -86,7 +129,7 @@ public class Board {
 
         try {
             // read all lines from conf/student-ids.csv int a List<String>
-            List<String> lines = Files.readAllLines(Path.of("conf/student-ids.csv"));
+            List<String> lines = Files.readAllLines(Path.of(studentIdPath));
 
             // for each line, split it into "tokens," i.e., "1,Aaron" "1" "Aaron"
             for (String line : lines){
